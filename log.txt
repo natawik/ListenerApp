@@ -1,0 +1,24 @@
+окт 30, 2020 10:56:31 AM Listener launch
+INFO: name of file: pom.xml, creation time: 2020-10-29T14:54:32Z
+окт 30, 2020 10:56:31 AM Listener launch
+INFO: begin of handling time: 2020-10-30T10:56:31.568, common time of handling, ms: 0, number of lines in file: 119
+окт 30, 2020 10:56:31 AM Listener launch
+INFO: name of file: example.json, creation time: 2020-10-29T13:58:23Z
+окт 30, 2020 10:56:31 AM Listener launch
+INFO: begin of handling time: 2020-10-30T10:56:31.570, common time of handling, ms: 0, number of lines in file: 0
+окт 30, 2020 10:56:51 AM Listener launch
+INFO: name of file: file.txt, creation time: 2020-10-30T07:56:43Z
+окт 30, 2020 10:56:51 AM Listener launch
+INFO: file deleted: true, name of deleted file: file.txt
+окт 30, 2020 10:57:51 AM Listener launch
+INFO: name of file: IMG_20200523_175149 — копия.jpg, creation time: 2020-09-25T06:27:19Z
+окт 30, 2020 10:57:51 AM Listener launch
+INFO: file deleted: true, name of deleted file: IMG_20200523_175149 — копия.jpg
+окт 30, 2020 11:03:41 AM Listener launch
+INFO: name of file: file, creation time: 2020-10-30T08:02:57Z
+окт 30, 2020 11:03:41 AM Listener launch
+INFO: file deleted: true, name of deleted file: file
+окт 30, 2020 11:08:08 AM Listener launch
+INFO: name of file: file1.json, creation time: 2020-10-30T08:06:47Z
+окт 30, 2020 11:08:08 AM Listener launch
+INFO: begin of handling time: 2020-10-30T11:08:08.741, common time of handling, ms: 0, number of lines in file: 15
