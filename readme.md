@@ -1,3 +1,4 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/7a31d77f5f84a77fb9c6/maintainability)](https://codeclimate.com/github/natawik/ListenerApp/maintainability)
 ### Приложение должно слушать директорию на появление новых файлов:
 
 + При появлении нового файла необходимо вывести в лог его имя, его расширение и дату создания
