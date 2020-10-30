@@ -17,11 +17,18 @@ public class Listener {
         return index == -1 ? null : ext.substring(index);
     }
 
+    private static String getSeperetor(String path) {
+        if (path.contains("/")) return "/";
+        return "\\";
+    }
+
     public void launch(String pathToDir) throws InterruptedException, IOException {
 
         LogManager.getLogManager().readConfiguration(Listener.class.getResourceAsStream("logging.properties"));
 
         Path path = Paths.get(pathToDir);
+        String sep = getSeperetor(pathToDir);
+
         WatchService watchService = null;
         try {
             watchService = path.getFileSystem().newWatchService();
@@ -49,10 +56,10 @@ public class Listener {
                         System.out.println("We lost some events");
                         break;
                     case "ENTRY_CREATE":
-                        File file = new File(pathToDir + "/" + event.context());
+                        File file = new File(pathToDir + sep + event.context());
 
                         BasicFileAttributes attr = Files.readAttributes(
-                                Paths.get(pathToDir + "/" + event.context()),
+                                Paths.get(pathToDir + sep + event.context()),
                                 BasicFileAttributes.class);
 
                         log.log(Level.INFO, "name of file: " + event.context().toString() +

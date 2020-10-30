@@ -22,3 +22,7 @@ INFO: file deleted: true, name of deleted file: file
 INFO: name of file: file1.json, creation time: 2020-10-30T08:06:47Z
 окт 30, 2020 11:08:08 AM Listener launch
 INFO: begin of handling time: 2020-10-30T11:08:08.741, common time of handling, ms: 0, number of lines in file: 15
+окт 30, 2020 11:42:09 AM Listener launch
+INFO: name of file: file1.json, creation time: 2020-10-30T08:06:47Z
+окт 30, 2020 11:42:09 AM Listener launch
+INFO: begin of handling time: 2020-10-30T11:42:09.709, common time of handling, ms: 0, number of lines in file: 15
