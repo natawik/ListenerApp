@@ -22,7 +22,6 @@ public class Listener {
     }
 
     private void listen(WatchService watchService, String pathToDir) throws IOException, InterruptedException {
-        String sep = getSeperetor(pathToDir);
         while (true) {
             WatchKey key = null;
             try {
@@ -31,42 +30,52 @@ public class Listener {
                 e.printStackTrace();
             }
             assert key != null;
-            for (WatchEvent event : key.pollEvents()) {
-                switch (event.kind().name()) {
-                    case "OVERFLOW":
-                        System.out.println("We lost some events");
-                        break;
-                    case "ENTRY_CREATE":
-                        File file = new File(pathToDir + sep + event.context());
-
-                        BasicFileAttributes attr = Files.readAttributes(
-                                Paths.get(pathToDir + sep + event.context()),
-                                BasicFileAttributes.class);
-
-                        log.log(Level.INFO, "name of file: " + event.context().toString() +
-                                ", creation time: " + attr.creationTime());
-
-                        if (Objects.equals(getFileExtension(String.valueOf(event.context())), ".xml") ||
-                                Objects.equals(getFileExtension(String.valueOf(event.context())), ".json")) {
-                            FileHandlerCount fileHandler = new FileHandlerCount(file);
-                            Thread thread1 = new Thread(fileHandler);
-                            thread1.start();
-
-                            log.log(Level.INFO, "begin of handling time: " + LocalDateTime.now()
-                                    + ", common time of handling, ms: " + fileHandler.getTimeOfHandle() +
-                                    ", number of lines in file: " + fileHandler.getCount());
-                            thread1.join(fileHandler.getTimeOfHandle());
-                        } else {
-                            FileHandlerCheck fileHandlerCheck = new FileHandlerCheck(file);
-
-                            log.log(Level.INFO, "file deleted: " + fileHandlerCheck.delete()
-                                    + ", name of deleted file: " + event.context());
-                        }
-                        break;
-                }
-            }
+            watchEvent(key, pathToDir);
             key.reset();
         }
+    }
+
+    private void watchEvent(WatchKey key, String pathToDir) throws IOException, InterruptedException {
+        String sep = getSeperetor(pathToDir);
+        for (WatchEvent event : key.pollEvents()) {
+            switch (event.kind().name()) {
+                case "OVERFLOW":
+                    System.out.println("We lost some events");
+                    break;
+                case "ENTRY_CREATE":
+                    File file = new File(pathToDir + sep + event.context());
+
+                    BasicFileAttributes attr = Files.readAttributes(
+                            Paths.get(pathToDir + sep + event.context()),
+                            BasicFileAttributes.class);
+
+                    log.log(Level.INFO, "name of file: " + event.context().toString() +
+                            ", creation time: " + attr.creationTime());
+                    handleEvent(event, file);
+                    break;
+            }
+        }
+    }
+
+    private void handleEvent(WatchEvent event, File file) throws InterruptedException {
+        if (Objects.equals(getFileExtension(String.valueOf(event.context())), ".xml") ||
+                Objects.equals(getFileExtension(String.valueOf(event.context())), ".json")) {
+            FileHandlerCount fileHandler = new FileHandlerCount(file);
+
+            Thread thread1 = new Thread(fileHandler);
+            thread1.start();
+
+            log.log(Level.INFO, "begin of handling time: " + LocalDateTime.now()
+                    + ", common time of handling, ms: " + fileHandler.getTimeOfHandle() +
+                    ", number of lines in file: " + fileHandler.getCount());
+            thread1.join(fileHandler.getTimeOfHandle());
+        } else {
+            FileHandlerCheck fileHandlerCheck = new FileHandlerCheck(file);
+
+            log.log(Level.INFO, "file deleted: " + fileHandlerCheck.delete()
+                    + ", name of deleted file: " + event.context());
+        }
+
     }
 
     public void launch(String pathToDir) throws IOException, InterruptedException {
