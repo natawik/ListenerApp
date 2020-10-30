@@ -5,7 +5,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class Listener {
@@ -22,29 +21,11 @@ public class Listener {
         return "\\";
     }
 
-    public void launch(String pathToDir) throws InterruptedException, IOException {
-
-        LogManager.getLogManager().readConfiguration(Listener.class.getResourceAsStream("logging.properties"));
-
-        Path path = Paths.get(pathToDir);
+    private void listen(WatchService watchService, String pathToDir) throws IOException, InterruptedException {
         String sep = getSeperetor(pathToDir);
-
-        WatchService watchService = null;
-        try {
-            watchService = path.getFileSystem().newWatchService();
-            path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
-        } catch (NoSuchFileException e) {
-            log.log(Level.WARNING, "Wrong path was entered");
-            throw new CustomException("Wrong path was entered");
-        } catch (IOException e) {
-            e.printStackTrace();
-            log.log(Level.WARNING, "Some IO error");
-        }
-
         while (true) {
             WatchKey key = null;
             try {
-                assert watchService != null;
                 key = watchService.take();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -85,6 +66,25 @@ public class Listener {
                 }
             }
             key.reset();
+        }
+    }
+
+    public void launch(String pathToDir) throws IOException, InterruptedException {
+
+        Path path = Paths.get(pathToDir);
+        WatchService watchService = null;
+        try {
+            watchService = path.getFileSystem().newWatchService();
+            path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+        } catch (NoSuchFileException e) {
+            log.log(Level.WARNING, "Wrong path was entered");
+            throw new CustomException("Wrong path was entered");
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.log(Level.WARNING, "Some IO error");
+        }
+        if (watchService != null) {
+            listen(watchService, pathToDir);
         }
     }
 
