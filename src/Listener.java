@@ -22,8 +22,8 @@ public class Listener {
     }
 
     private void listen(WatchService watchService, String pathToDir) throws IOException, InterruptedException {
-        while (true) {
-            WatchKey key = null;
+        WatchKey key;
+        while ((key = watchService.take()) != null) {
             try {
                 key = watchService.take();
             } catch (InterruptedException e) {
@@ -37,7 +37,7 @@ public class Listener {
 
     private void watchEvent(WatchKey key, String pathToDir) throws IOException, InterruptedException {
         String sep = getSeperetor(pathToDir);
-        for (WatchEvent event : key.pollEvents()) {
+        for (WatchEvent<?> event : key.pollEvents()) {
             switch (event.kind().name()) {
                 case "OVERFLOW":
                     System.out.println("We lost some events");
