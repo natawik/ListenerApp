@@ -24,19 +24,12 @@ public class FileHandlerCount implements Runnable {
         return count;
     }
 
-    public long getTimeOfHandle() {
-        return timeOfHandle;
-    }
-
     @Override
     public void run() {
         try (LineNumberReader reader = new LineNumberReader(new FileReader(file))) {
-            long timeOfBegin = System.currentTimeMillis();
             while (reader.readLine() != null) {
                 count = reader.getLineNumber();
             }
-            long timeOfEnd = System.currentTimeMillis();
-            timeOfHandle = timeOfEnd - timeOfBegin;
         } catch (IOException e) {
             e.printStackTrace();
         }

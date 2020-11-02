@@ -62,13 +62,16 @@ public class Listener {
                 Objects.equals(getFileExtension(String.valueOf(event.context())), ".json")) {
             FileHandlerCount fileHandler = new FileHandlerCount(file);
 
-            Thread thread1 = new Thread(fileHandler);
-            thread1.start();
+            Thread thread = new Thread(fileHandler);
+            long timeOfBegin = System.currentTimeMillis();
+            thread.start();
+            thread.join();
+            long timeOfEnd = System.currentTimeMillis();
 
+            long timeOfHandle = timeOfEnd - timeOfBegin;
             log.log(Level.INFO, "begin of handling time: " + LocalDateTime.now()
-                    + ", common time of handling, ms: " + fileHandler.getTimeOfHandle() +
+                    + ", common time of handling, ms: " + timeOfHandle +
                     ", number of lines in file: " + fileHandler.getCount());
-            thread1.join(fileHandler.getTimeOfHandle());
         } else {
             FileHandlerCheck fileHandlerCheck = new FileHandlerCheck(file);
 
