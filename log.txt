@@ -40,3 +40,11 @@ WARNING: Wrong path was entered
 INFO: name of file: example1.json, creation time: 2020-10-29T13:58:23Z
 окт 30, 2020 12:33:40 PM Listener handleEvent
 INFO: begin of handling time: 2020-10-30T12:33:40.623, common time of handling, ms: 0, number of lines in file: 118
+ноя 02, 2020 4:08:41 PM Listener watchEvent
+INFO: name of file: file.json, creation time: 2020-11-02T13:07:51Z
+ноя 02, 2020 4:08:41 PM Listener handleEvent
+INFO: begin of handling time: 2020-11-02T16:08:41.914, common time of handling, ms: 0, number of lines in file: 0
+ноя 02, 2020 4:10:31 PM Listener watchEvent
+INFO: name of file: file.json, creation time: 2020-11-02T13:07:51Z
+ноя 02, 2020 4:10:31 PM Listener handleEvent
+INFO: begin of handling time: 2020-11-02T16:10:31.833, common time of handling, ms: 1, number of lines in file: 376
