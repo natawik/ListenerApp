@@ -5,7 +5,6 @@ public class FileHandlerCount implements Runnable {
     private final File file;
     private final String path;
     private long count;
-    private long timeOfHandle;
 
     public FileHandlerCount(File file) {
         this.file = file;
