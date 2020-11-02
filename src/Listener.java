@@ -22,7 +22,9 @@ public class Listener {
     }
 
     private void listen(WatchService watchService, String pathToDir) throws IOException, InterruptedException {
+        //Создается ключ наблюдения для хранения возвращаемого значения операции poll
         WatchKey key;
+        //Цикл while будет блокироваться до тех пор, пока условный оператор не вернется либо с ключом наблюдения, либо с нулем.
         while ((key = watchService.take()) != null) {
             try {
                 key = watchService.take();
@@ -31,12 +33,16 @@ public class Listener {
             }
             assert key != null;
             watchEvent(key, pathToDir);
+            //После обработки всех событий мы должны вызвать API reset , чтобы снова поставить в очередь ключ наблюдения.
             key.reset();
         }
     }
 
     private void watchEvent(WatchKey key, String pathToDir) throws IOException, InterruptedException {
         String sep = getSeperetor(pathToDir);
+        //Когда мы получаем ключ наблюдения, тогда цикл while выполняет код внутри него.
+        //Мы используем API WatchKey.pollEvents , чтобы вернуть список событий, которые произошли.
+        //Затем мы используем цикл for each , чтобы обработать их один за другим.
         for (WatchEvent<?> event : key.pollEvents()) {
             switch (event.kind().name()) {
                 case "OVERFLOW":
