@@ -63,7 +63,7 @@ public class Listener {
         }
     }
 
-    private void handleEvent(WatchEvent event, File file) throws InterruptedException {
+    private void handleEvent(WatchEvent<?> event, File file) throws InterruptedException {
         if (Objects.equals(getFileExtension(String.valueOf(event.context())), ".xml") ||
                 Objects.equals(getFileExtension(String.valueOf(event.context())), ".json")) {
             FileHandlerCount fileHandler = new FileHandlerCount(file);
