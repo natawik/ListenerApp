@@ -69,12 +69,8 @@ public class Listener {
             FileHandlerCount fileHandler = new FileHandlerCount(file);
 
             Thread thread = new Thread(fileHandler);
-            long timeOfBegin = System.currentTimeMillis();
             thread.start();
-            thread.join();
-            long timeOfEnd = System.currentTimeMillis();
 
-            long timeOfHandle = timeOfEnd - timeOfBegin;
             log.log(Level.INFO, "begin of handling time: " + LocalDateTime.now()
                     + ", common time of handling, ms: " + timeOfHandle +
                     ", number of lines in file: " + fileHandler.getCount());
